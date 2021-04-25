@@ -1,0 +1,42 @@
+#include<iostream>
+using namespace std;
+bool visited[105][105];
+int dx[] = { 0,0,-1,1 }, dy[] = { -1,1,0,0,}; //上下左右
+class Solution {
+public:
+    int getS(int x) {
+        int s = 0;
+        while (x / 10) {
+            s += x % 10;
+            x /= 10;
+        }
+        s += x;
+        return s;
+    }
+    void dfs(int threshold, int rows, int cols, int i, int j, int& res) {
+        if (getS(i) + getS(j) > threshold) return;
+        visited[i][j] = true;
+        res++;
+        for (int c = 0; c < 4; c++) {
+            int x = i + dx[c], y = j + dy[c];
+            if (x >= 0 && x < rows && y >= 0 && y < cols && !visited[x][y]) {
+                dfs(threshold, rows, cols, x, y, res);
+            }
+        }
+    }
+        int movingCount(int threshold, int rows, int cols)
+    {
+            if (rows == 0 && cols == 0) return 0;
+            memset(visited, 0, sizeof(visited));
+            int cnt = 0;
+            dfs(threshold, rows, cols, 0, 0, cnt);
+            return cnt;
+    }
+};
+
+
+int main() {
+    Solution A;
+    cout << A.movingCount(5, 0, 0) << endl;
+	return 0;
+}
