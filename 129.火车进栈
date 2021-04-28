@@ -1,0 +1,55 @@
+#include<iostream>
+using namespace std;
+#include<algorithm>
+#include<queue>
+#include<stack>
+int n;
+
+bool check(vector<int> a) {
+	queue<int> q;
+	stack<int> s;
+	for (int i = 0; i < n; i++) {
+		q.push(a[i]);
+	}
+	for (int i = 1; i < n + 1; i++) {
+		s.push(i);
+		while (!s.empty() && s.top() == q.front()) {
+			s.pop();
+			q.pop();
+		}
+	}
+	if (s.empty() && q.empty()) {
+		return true;
+	}
+	else {
+		return false;
+	}
+
+
+}
+
+int main() {
+	cin >> n;
+	vector<int> a;
+	for (int i = 1; i < n + 1; i++) {
+		a.push_back(i);
+	}
+	int cnt = 1;
+	do {
+		if (check(a)) {
+			for (int i = 0; i < n; i++) {
+				cout << a[i];
+			}
+			cout << endl;
+			cnt++;
+			if (cnt > 20) {
+				break;
+			}
+		}
+	} while (next_permutation(a.begin(), a.end()));
+	return 0;
+
+
+
+
+}
