@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int maxDiff(vector<int>& nums) {
+        int n=nums.size();
+        if(n==0){
+            return 0;
+        }
+        vector<int> res(n);
+        res[0]=0;
+        int buf=nums[0];
+        for(int i=1;i<nums.size();i++){
+            if(nums[i]>buf){
+                res[i]=nums[i]-buf;
+            }
+            else{
+                buf=nums[i];
+                res[i]=0;
+            }
+            
+        }
+        return *max_element(res.begin(),res.end());
+    }
+};
