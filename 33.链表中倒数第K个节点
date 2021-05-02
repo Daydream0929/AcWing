@@ -1,0 +1,33 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* findKthToTail(ListNode* pListHead, int k) {
+        ListNode* p=pListHead;
+        if(!p){
+            return NULL;
+        }
+        int n=1;
+        while(p->next){
+            p=p->next;
+            n++;
+        }
+        if(k>n){
+            return NULL;
+        }
+        ListNode* r=pListHead;
+        int pos=1;
+        while(r->next && pos<n-k+1){
+            r=r->next;
+            pos++;
+        }
+        return r;
+        
+    }
+};
