@@ -1,0 +1,16 @@
+class Solution {
+public:
+    bool verifySequenceOfBST(vector<int> sequence) {
+        return recur(sequence,0,sequence.size()-1);
+    }
+    bool recur(vector<int>& sequence,int i,int j){
+        if(i>=j) return true;
+        int p=i;
+        while(sequence[p]<sequence[j]) p++;
+        
+        int mid=p;
+        while(sequence[p]>sequence[j]) p++;
+        
+        return p==j &&recur(sequence,i,mid-1) &&recur(sequence,mid,j-1);
+    }
+};
