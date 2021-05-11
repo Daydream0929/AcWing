@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<int> getLeastNumbers_Solution(vector<int> input, int k) {
+        priority_queue<int> q;
+        for(auto x:input){
+            q.push(x);
+            if(q.size()>k) q.pop();
+        }
+        vector<int> res;
+        while(!q.empty()){
+            int a=q.top();
+            res.push_back(a);
+            q.pop();
+        }
+        reverse(res.begin(),res.end());
+        return res;
+        
+    }
+};
