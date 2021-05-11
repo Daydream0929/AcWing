@@ -17,3 +17,43 @@ public:
         
     }
 };
+
+
+
+
+class Solution {
+public:
+    vector<int> getLeastNumbers_Solution(vector<int> input, int k) {
+        int n=input.size()-1;
+        quickSort(input,0,n);
+
+        return vector<int>({input.begin(),input.begin()+k});
+        
+        
+    }
+    void quickSort(vector<int>& arr,int l,int r){
+
+        if(l<r){
+            int i=l;
+            int j=r;
+            int temp=arr[i];
+            while(i<j){
+                while(i<j && arr[j]>temp){
+                    j--;
+                }
+                arr[i]=arr[j];
+                while(i<j && arr[i]<=temp){
+                    i++;
+                }
+                arr[j]=arr[i];
+
+                
+            }
+            arr[i]=temp;
+            quickSort(arr,l,i-1);
+            quickSort(arr,i+1,r);
+            
+            
+        }
+    }
+};
