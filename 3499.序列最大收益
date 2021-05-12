@@ -1,0 +1,33 @@
+#include<iostream>
+#include<cstring>
+
+using namespace std;
+
+const int  N=201;
+int n,k,m;
+int a[N],W[N][N]; 
+int f[N][N];    //f[i][j]表示对于前i个数 保留第i个数 在其前面一共删除j个数的最大收益
+
+int main(){
+    scanf("%d%d%d", &n, &k ,&m);
+    for(int i=1;i<=m;i++)  scanf("%d", &a[i]);
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=n;j++){
+            scanf("%d",&W[i][j]);
+        }
+    }
+    
+    memset(f,-0x3f,sizeof f);
+    f[1][0]=0;
+    for(int i=2;i<=m;i++)
+        for(int j=0;j<=k;j++)
+            for(int u=1;u<i;u++)  //u代表倒数第二个数 也就是f[i][j] 紧接着i前面的数 显然u最大为i-1
+                if(j>=i-u-1)
+                    f[i][j]=max(f[i][j],f[u][j-(i-u-1)]+W[a[u]][a[i]]);
+    
+    int res=0;
+    for(int i=0;i<=k;i++)
+        res=max(res,f[m][i]);
+    printf("%d\n",res);
+    return 0;
+}
