@@ -1,0 +1,89 @@
+1.
+#include<iostream>
+using namespace std;
+
+const int N=20;
+int n;
+
+char g[N][N];
+bool col[N],dg[N],udg[N];
+
+
+void dfs(int u){
+    if(u==n){
+        for(int i=0;i<n;i++) puts(g[i]);
+        puts("");
+        return;
+    }
+
+    for(int i=0;i<n;i++){
+        if(!col[i] && !dg[i+u] && !udg[n-u+i]){
+            g[u][i]='Q';
+            col[i] = dg[i+u] = udg[n-u+i] = true;
+            dfs(u+1);
+            col[i] = dg[i+u] = udg[n-u+i] = false;
+            g[u][i]='.';
+        }
+    }
+
+}
+
+int main(){
+    cin>>n;
+    for(int i=0;i<n;i++)
+        for(int j=0;j<n;j++)
+            g[i][j]='.';
+    dfs(0);
+    return 0;
+}
+
+2.
+#include<iostream>
+using namespace std;
+
+const int N=20;
+int n;
+
+char g[N][N];
+bool col[N],row[N],dg[N],udg[N];
+
+
+void dfs(int x,int y,int s){
+    if(s>n) return ;
+    if(y==n) y=0,x++;
+    if(x==n){
+        if(s==n){
+            for(int i=0;i<n;i++) puts(g[i]);
+            puts("");
+
+        }
+        return;
+    }
+    g[x][y]='.';
+
+    //不放
+    dfs(x,y+1,s);
+
+    //放
+    if(!col[y]&&!row[x]&&!dg[x+y]&&!udg[x-y+n]){
+        g[x][y]='Q';
+        col[y]=row[x]=dg[x+y]=udg[x-y+n]=true;
+        dfs(x,y+1,s+1);
+        col[y]=row[x]=dg[x+y]=udg[x-y+n]=false;
+        g[x][y]='.';
+    }
+
+
+
+
+}
+
+
+
+
+int main(){
+    cin>>n;
+
+    dfs(0,0,0);
+    return 0;
+}
