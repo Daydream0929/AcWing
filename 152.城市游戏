@@ -1,0 +1,58 @@
+#include<iostream>
+#include<algorithm>
+#include<cstring>
+
+using namespace std;
+
+const int N=1010;
+
+int n,m;
+int h[N][N];
+int q[N],l[N],r[N];
+char g[N][N];
+
+void val(int a[],int l[],int r[]){
+    a[0]=a[m+1]=-1;
+    
+    int tt=-1;
+    q[++tt]=0;
+    for(int i=1;i<=m;i++){
+        while(a[q[tt]]>=a[i]) tt--;
+        l[i]=i-q[tt];
+        q[++tt]=i;
+    }
+    
+    tt=-1;
+    q[++tt]=m+1;
+    for(int i=m;i;i--){
+        while(a[q[tt]]>=a[i]) tt--;
+        r[i]=q[tt]-i;
+        q[++tt]=i;
+    }
+    
+}
+
+
+int work(int a[]){
+    val(a,l,r);
+    int res=0;
+    for(int i=1;i<=m;i++) res=max(res,a[i]*(l[i]+r[i]-1));
+    return res;
+}
+
+int main(){
+    scanf("%d%d",&n,&m);
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            cin>>g[i][j];
+            if(g[i][j]=='F') h[i][j]=h[i-1][j]+1;
+            else h[i][j]=0;
+        }
+    }
+    
+    int res=0;
+    for(int i=1;i<=n;i++) res=max(res,work(h[i]));
+    cout<<res*3<<endl;
+    
+    return 0;
+}
