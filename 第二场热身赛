@@ -1,0 +1,153 @@
+1.特殊数字
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N =1010;
+
+int n;
+
+bool f4(int x){
+    int sum=0;
+    while(x){
+        sum+=x%10;
+        x/=10;
+    }
+    return sum%4==0;
+}
+
+int main(){
+    scanf("%d",&n);
+    for(int i=n;;i++){
+        if(f4(i)){
+            printf("%d",i);
+            break;
+        }
+    }
+    return 0;
+}
+
+
+2.双端队列
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include<map>
+
+using namespace std;
+
+const int N = 1e6 + 10;
+
+int q;
+int l[N],r[N];
+int lp,rp;
+map<int,int> lm,rm;
+
+void insert_to_L(int x){
+    l[++lp]=x;
+    lm[x]=lp;
+}
+
+void insert_to_R(int x){
+    r[++rp]=x;
+    rm[x]=rp;
+}
+
+int query(int x){
+    int p=0;
+    int lf=0,rf=0;  //标记p在左边还是右边
+ /*   for(int i=0;i<=lp;i++){
+        if(l[i]==x){
+            p=i;
+            lf=1;
+            break;
+        }
+    }*/
+    if(lm.count(x)){
+        p=lm[x];
+        lf=1;
+    }
+    else{
+        p=rm[x];
+        rf=1;
+    }
+ /*   for(int j=0;j<=rp;j++){
+        if(r[j]==x){
+            p=j;
+            rf=1;
+            break;
+        }
+    }*/
+    if(lf){
+        return min(lp-p,p+rp+1);
+    }
+    else{
+        return min(lp+p+1,rp-p);
+    }
+    
+}
+
+
+
+int main() {
+    cin >> q;
+    lp=-1,rp=-1;
+    while (q--) {
+        char op[10];
+        int x;
+        cin >> op >> x;
+        if (op[0] == 'L') {
+            insert_to_L(x);
+  
+        }
+        else if (op[0] == 'R') {
+            insert_to_R(x);
+
+        }
+        else if (op[0] == '?') {
+            cout<<query(x)<<endl;
+
+        }
+
+    }
+
+    return 0;
+}
+
+
+
+3.最长非递减子序列
+
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 1e6+10;
+
+
+int n;
+
+int main(){
+    int s1=0,s2=0,s3=0,s4=0;
+    scanf("%d",&n);
+    
+    for(int i=1;i<=n;i++){
+        int x;
+        scanf("%d",&x);
+        if(x==1){
+            s1=s1+1;
+            s3=max(s2+1,s3+1);
+        }
+        else{
+            s2=max(s2+1,s1+1);
+            s4=max(s3+1,s4+1);
+        }
+    }
+    cout<<max(s3,s4)<<endl;
+
+    return 0;
+}
